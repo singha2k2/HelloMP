@@ -1,0 +1,11 @@
+.cards{
+  
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+   
+}
+
+.cards:hover{
+    transform:translateY(10px );
+    box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.2);  
+}

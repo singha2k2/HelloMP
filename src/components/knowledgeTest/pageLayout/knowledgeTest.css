@@ -1,0 +1,47 @@
+/* Apply the reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .testing-screen {
+    display: flex;
+    height: 90vh;
+    width: 235%;
+  }
+  
+  .left {
+    width: 70%;
+    padding: 10px;
+    /* border: 1px solid black; */
+  }
+  
+  .right {
+    width: 30%;
+    padding: 10px;
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .camera-feed {
+    flex: 1;
+    border: 1px solid black;
+  }
+  
+  .options {
+    border: 1px solid black;
+  }
+  
+  /* Media Query for smaller screens (adjust the breakpoint as needed) */
+  @media (max-width: 768px) {
+    .testing-screen {
+      flex-direction: column;
+    }
+  
+    .left,
+    .right {
+      width: 100%;
+    }
+  }
+  

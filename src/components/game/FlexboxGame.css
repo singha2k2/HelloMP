@@ -1,0 +1,69 @@
+#gamecontainer {
+  width: 253%;
+  height: 90vh;
+    background: rgb(232,238,174);
+    background: radial-gradient(circle, rgba(232,238,174,1) 0%, rgba(128,233,175,1) 100%);
+}
+
+.flexbox-game-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  
+  
+  textarea {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .right-side {
+    flex: 1;
+  }
+  
+  .square {
+    width: 100px;
+    height: 110px;
+    background-color: lightblue;
+    position: static;
+  }
+  
+  .circle {
+    width: 50px;
+    height: 50px;
+    background-color: lightcoral;
+    border-radius: 50%;
+    top: 50%;
+    left: 550%;
+    transform: translate(30%, -38%);
+    transition: left 0.3s ease; /* Add a transition for smooth movement */
+  }
+  
+  .correct .circle {
+    left: 10%; /* Adjust as needed */
+  }
+
+  .textarea-container {
+    padding: 10px; /* Adjust as needed for spacing */
+  }
+
+  .mat-8 {
+    margin-bottom: 90px; /* Adjust the value as needed */
+}
+  
+  .container-with-border {
+
+    border: 3px solid #000; /* Dark border color */
+    padding: 39px; /* Adjust as needed for spacing */
+    width: 38vw;
+    background: rgb(244,245,237);
+background: radial-gradient(circle, rgba(244,245,237,1) 0%, rgba(210,222,215,1) 100%);
+  }
+
+  .container-with-circle-border {
+    position: relative;
+    top: -55px;
+    left: 8px;
+  }
+  

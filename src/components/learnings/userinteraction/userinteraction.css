@@ -1,0 +1,143 @@
+.intractive-container{
+    width: 100vw;
+    height: 100vh;
+    background-image: url("../../../../public/images/games/game_background.gif");
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    display: flex;
+}
+.heading_container{
+    color: white;
+    font-weight: bolder;
+    font-style: italic;
+    height: 10vh;
+    width: 98vw;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 20px;
+    
+}
+.submit_button{
+    color: white;
+    font-weight: bolder;
+    font-style: italic;
+ 
+  
+   
+}
+.intractive-container-draggable{
+    width: 50%;
+    height: 100%;
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    font-weight: bolder;
+    font-style: italic;
+    gap: 12px;
+}
+
+.intractive-container-droppable{
+    width: 50%;
+    height: 100%;
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    font-weight: bolder;
+    font-style: italic;
+    gap: 12px;
+}
+
+#little_Container{
+    width: 50px;
+    height: 50px;
+    background-color: black;
+    border: 1px solid white;
+    color: white;
+}
+
+.cloud_bg{
+    
+    display: flex;
+    flex-direction: row;
+    border-radius: 6px;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 10%;
+    gap: 12px;
+    background-size: cover;
+    background-image: url("../../../../public/images/tress_bg.png");
+}
+
+/* Compiler Codes */
+.first_box_compiler, .first_box_output{
+    width: 50%;
+    height: 100vh;
+    border : 1px dotted white
+}
+
+
+
+/* /Coding Playground */
+.coding-practice-main{
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   }
+.playground-main {
+    width: 80%;
+   border-radius: 15px;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border: 3px double white;
+    backdrop-filter: blur(10px);
+}
+.simulator-box {
+    width: 50%;
+   border-radius: 15px;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border: 3px double white;
+    backdrop-filter: blur(10px);
+    margin: 6px;
+    flex-wrap: wrap;
+}
+.learn_to_code_bg{
+    
+    background-size: cover;
+    background-image: url("../../../../public/images/games/coding_background.gif");
+
+}
+
+.nested-simulator-box{
+    width: 25%;
+   border-radius: 15px;
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border: 3px double white;
+    backdrop-filter: blur(10px);
+    margin: 6px;
+}
