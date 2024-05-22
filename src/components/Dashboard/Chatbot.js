@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Chatbot.css'; // Import your CSS file for styling
+import axios from 'axios';
 
-const API_KEY = "";
 
-export const processMessageToChatGPT = async (chatMessages) => {
+
+export const processMessageToChatGPT = async (chatMessages,API_KEY) => {
+
+
     let apiMessages = chatMessages.map((messageObject) => {
         let role = messageObject.sender === "ChatGPT" ? "assistant" : "user";
         return {
@@ -46,6 +49,8 @@ export const processMessageToChatGPT = async (chatMessages) => {
 
 
 function Chatbot() {
+    const [API_KEY,SET_API_KEY] = useState("");
+
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState([
         {
@@ -58,10 +63,17 @@ function Chatbot() {
 
     useEffect(() => {
         // Scroll to the bottom of the messages container when messages change
+        getOpenAiKey();
         if (chatbotMessagesRef.current) {
             chatbotMessagesRef.current.scrollTop = chatbotMessagesRef.current.scrollHeight;
         }
     }, [messages]);
+
+    const getOpenAiKey = async() => {
+        const API_KEY_RESPONSE = await axios.get(`https://learning-server-olive.vercel.app/keys/openAiKey`) ;
+
+        SET_API_KEY(API_KEY_RESPONSE.data.KeyId);
+    }
 
     const handleChange = (event) => {
         setInput(event.target.value);
@@ -82,7 +94,7 @@ function Chatbot() {
         setInput('');
     
         try {
-            const responseMessage = await processMessageToChatGPT(newMessages);
+            const responseMessage = await processMessageToChatGPT(newMessages,API_KEY);
             
             // Construct the new message object for ChatGPT's response
             const chatGptResponse = {

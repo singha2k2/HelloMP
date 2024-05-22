@@ -8,6 +8,7 @@ import Alert from 'react-bootstrap/Alert';
 import { useTheme } from '../../../context/ThemeContext';
 import { useDebounce } from '../../../hooks/debouncing';
 import { processMessageToChatGPT } from '../../Dashboard/Chatbot';
+import axios from 'axios';
 
 export const defaultCode =
   'public class Main{\n  public static void main(String[] args){\n    System.out.println("Hello");\n  }\n}';
@@ -52,10 +53,15 @@ function JavaCodeCompiler({ embeddedCode = defaultCode, testingCode }) {
         };
         const newMessages = [...messages, newMessage];
 
-        const responseMessage = await processMessageToChatGPT(newMessages);
+        await axios.get(`https://learning-server-olive.vercel.app/keys/openAiKey`).then(async (response)=>{
+          const API_KEY = response.data.KeyId;
+          const responseMessage = await processMessageToChatGPT(newMessages,API_KEY);
         setCompiledCode(responseMessage);
         setStatus(data.message);
         setError('');
+        }) ;
+
+        
       } catch (error) {
         console.error(error);
         setError('An error occurred during compilation.');
@@ -126,7 +132,7 @@ function JavaCodeCompiler({ embeddedCode = defaultCode, testingCode }) {
             <Card>
               <Card.Body className="success">
                 <h3>Compiled Code:</h3>
-                <pre>{compiledCode}</pre>
+                <pre className="text text-success">{compiledCode}</pre>
               </Card.Body>
             </Card>
           </div>
