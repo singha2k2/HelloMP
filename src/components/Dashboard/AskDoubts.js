@@ -2,17 +2,28 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "../loader/loader";
 import axios from "axios";
-function SolveDoubt({ loadPresentDoubts }) {
+import { Alert } from "react-bootstrap";
+function SolveDoubt({ handleSuccessCreditUpdation }) {
+  const [show, setShow] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [doubtData, setdoubtData] = useState(null);
   const [Question, setQuestion] = useState("");
+  const [email, setEmail] = useState("");
   const [approved, setApproved] = useState(false);
   const [availableDoubts, setAvailableDoubts] = useState([]);
   const [message, setMessage] = useState("Error in Submitting Question");
+  const [existingCoins, setExistingCoins] = useState(0);
 
   const handleQuestionSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    if (existingCoins < 5) {
+      setShow(true);
+      
+      setLoading(false);
+      return;
+    }
     try {
       const response = await axios.post(
         "https://learning-server-olive.vercel.app/api/addDoubt",
@@ -27,6 +38,32 @@ function SolveDoubt({ loadPresentDoubts }) {
         setMessage("Successfully Submitted Question");
         setApproved(true);
         console.log(response.data);
+
+        try {
+          const creditsResponse = await axios.put(
+            `https://learning-server-olive.vercel.app/api/updateSuccessCredits`,
+            {
+              email: email,
+              successCredits: existingCoins - 5,
+            }
+          );
+  
+          console.log(creditsResponse);
+  
+          if (!creditsResponse.data.success) {
+            console.log("Error in Updating Details");
+            setLoading(false);
+            return;
+          }
+          localStorage.setItem("successCredits", existingCoins - 5);
+          setExistingCoins(existingCoins - 5);
+          handleSuccessCreditUpdation();
+        } catch (error) {
+          console.log(error); // Log the error response data
+          setLoading(false);
+        }
+        return;
+
       } else {
         setdoubtData(response.data);
         setMessage(response.data.error);
@@ -64,13 +101,22 @@ function SolveDoubt({ loadPresentDoubts }) {
   };
 
   useEffect(() => {
+
     loadPresentAllDoubts();
-  }, [approved]);
+    setExistingCoins(parseInt(localStorage.getItem("successCredits")) );
+setEmail(localStorage.getItem("email"))
+  }, [approved,existingCoins,localStorage.getItem("successCredits")]);
 
   return (
     <div>
       {loading && <Loader />}
-
+      {show && 
+      <Alert key={"primary"} variant={"primary"} onClose={() => setShow(false)} dismissible>
+      You don't have enough coins.
+      <Alert.Link href="/get-more-in-less">Purchase Here</Alert.Link> more Coins
+      you like.
+    </Alert>
+    }
       <div className="todocontainer">
         <div className="todo-app">
           <h2>Doubt Asker </h2>

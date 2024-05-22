@@ -5,14 +5,22 @@ import '../navbar/navbar.css';
 import { useTheme } from '../../context/ThemeContext';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { Tooltip } from 'react-tooltip';
 
-function NavbarComponent({isLogged = false}) {
+function NavbarComponent({isLogged = false,successCredits=0}) {
   // const [darkMode, setDarkMode] = useState(false);
   const { darkMode, toggleDarkMode } = useTheme();
   const [uType,setUType] = useState("user");
   // const toggleDarkMode = () => {
   //   setDarkMode(!darkMode);
   // };
+  const [credits,setCredits] = useState(successCredits);
+
+  useEffect(() => {
+  const succ = localStorage.getItem("successCredits");
+  setCredits(succ);
+  }, [localStorage.getItem("successCredits")])
+  
 
   const navStyle = {
     background: darkMode ? 'rgba(0, 0, 0, 0.7)' : 'rgba(255, 255, 255, 0.7)',
@@ -71,12 +79,6 @@ function NavbarComponent({isLogged = false}) {
           </button>
         </Link>
 
-        <Link to="/learning-options">
-          <button type='submit' className={`btn ${darkMode ? 'btn-light' : 'btn-primary'}`} style={{ marginLeft: '10px' }}>
-            Try Now
-          </button>
-        </Link>
-
         {/* Conditionally render dashboard buttons based on uType and isLogged */}
         {uType === "user" && isLogged && (
           <Link to="/dashboard-user">
@@ -101,7 +103,22 @@ function NavbarComponent({isLogged = false}) {
             </button>
           </Link>
         )}
+
+
+
       </div>
+      <Tooltip  id="my-tooltip" />
+      {uType === "user" && isLogged && (
+
+          <Link data-tooltip-id="my-tooltip" data-tooltip-content="Success Credits" to="/get-more-in-less">
+          <i class="bi bi-fire" style={{color:"#c98100",fontSize:"26px"}}>
+
+          </i>
+          <span className='text font-italic'>{credits}</span>
+          
+          </Link>
+        )}
+       
 
       <i onClick={toggleDarkMode} style={{ color: darkMode ? 'white' : 'black', marginLeft: '7px' }} className={`bi ${darkMode ? 'bi-sun-fill' : 'bi-moon-fill'}`}></i>
     </nav>

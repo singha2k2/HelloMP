@@ -7,7 +7,10 @@
   .dashboardmainbar {
     /* box-shadow: 1px -2px 25px rgb(89, 89, 89); */
     width: 95%;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-image: url("/public/background-dashboard.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 12px;
     height: 90vh;
     z-index: 1;
     display: flex;
@@ -20,10 +23,13 @@
   }
   
   .profile-container {
-    margin: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+   
+ 
     border-radius: 10px;
     width: 90%;
-    height: 25%;
+    height: 34%;
     color: white;
     background: linear-gradient(135deg, #153677, #4e085f);
     border: 1px solid rgb(119, 119, 119);
@@ -34,7 +40,8 @@
     animation-timing-function: ease-in-out;
   }
   .image-container {
-    margin: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
     border-radius: 10px;
     width: 80%;
     height: 60%;

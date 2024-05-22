@@ -5,3 +5,11 @@ background-image: url('./../../../public/anime.gif');
 background-repeat: no-repeat;
 background-position: center;
 }
+#notfoundimagedasboard{
+    color: white;
+    width: 82vw;
+    height: 70vh;
+background-image: url('./../../../public/anime.gif');
+background-repeat: no-repeat;
+background-position: center;
+}

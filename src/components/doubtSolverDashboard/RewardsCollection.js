@@ -60,11 +60,14 @@ function RewardsCollection() {
             <ul id="list-container">
              
               <li>Name: {uData?.user?.name || "Username"}</li>
-              <span>Name: {uData?.user?.name || "Username"}</span>
               
               <li>
                 Number of Doubts Solved:{" "}
                 {uData?.user?.numberOfDoubtsSolved || 0}
+              </li>
+              <li>
+                Rewards Earned:{" "}
+                {uData?.user?.numberOfDoubtsSolved*10 || 0}
               </li>
             </ul>
           </div>

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Chatbot.css'; // Import your CSS file for styling
 
+const API_KEY = "";
 
 export const processMessageToChatGPT = async (chatMessages) => {
     let apiMessages = chatMessages.map((messageObject) => {
