@@ -15,7 +15,7 @@ function OneToOneCall({ userData }) {
     const serverSecret = "d87f68078f4bc4a2c84f8056d41069d3";
     // const appID = 331638582;
     // const serverSecret = "283f94bdc33057ac4178624c96d7b2e5";
-    const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+    const kitToken = ZegoUIKitPrebuilt.generateKitTokenForProduction(
       appID,
       serverSecret,
       roomNumber,
