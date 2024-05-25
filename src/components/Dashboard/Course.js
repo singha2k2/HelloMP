@@ -54,7 +54,7 @@ function Course() {
     }
 
     return (
-        <div className="" style={{background: "linear-gradient(135deg, #153677, #4e085f)",color:"white",borderRadius:"20px",width:"82vw"}}>
+        <div className="" style={{background: "linear-gradient(135deg, #153677, #4e085f)",color:"white",borderRadius:"20px",width:"100%"}}>
 
             <div className="row" style={{marginTop:"20px"}}> 
                 <div className="col text-center">

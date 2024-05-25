@@ -1,59 +1,80 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import CameraMonitoring from '../cameraMonitoring/cameraMonitoring';
 import Options from '../options/options';
 import Question from '../question/question';
 import './knowledgeTest.css';
 import QuizApp from '../../QuizApp/QuizApp';
+import { useParams } from 'react-router-dom';
 
 function KnowledgeTest() {
-  // State to store the random topic
-  const [randomTopic, setRandomTopic] = useState("");
+  const { questionTopic } = useParams();
+  const mediaRecorderRef = useRef(null);
+  const chunksRef = useRef([]);
+  const [fileHandle, setFileHandle] = useState(null);
+  const [recording, setRecording] = useState(false);
+  const [status, setStatus] = useState('Idle');
 
-  // Function to generate a random topic
-  const generateRandomTopic = () => {
-    const topics = ["Mathematics", "Science", "History", "Literature", "Geography"];
-    const randomIndex = Math.floor(Math.random() * topics.length);
-    return topics[randomIndex];
-  }
+  const handleCameraStop = () => {
+    console.log("Camera stopped.");
+  };
+
 
   useEffect(() => {
-    // Generate a random topic when the component mounts
-    setRandomTopic(generateRandomTopic());
-  }, []);
+    console.log("Question Topic from URL:", questionTopic);
+    
+  }, [questionTopic]);
 
   return (
     <div className="testing-screen">
       <div className="left">
         <div className="question">
-          <QuizApp />
+        <QuizApp
+       onFinish={handleCameraStop}
+       fileHandle={fileHandle}
+       setFileHandle={setFileHandle}
+       mediaRecorderRef={mediaRecorderRef}
+       chunksRef={chunksRef}
+       setStatus={setStatus}
+       setRecording={setRecording}
+       onCameraStop={handleCameraStop}
+      />
         </div>
       </div>
-      <div className="right" style={{borderRadius:"20px"}}>
-        <div className="camera-feed" style={{borderRadius:"20px"}}>
-          <CameraMonitoring />
-          <table className='mt-5 mx-5'>
+      <div className="right" style={{ borderRadius: "20px" }}>
+        <div className="camera-feed" style={{ borderRadius: "20px" }}>
+        <CameraMonitoring
+        onCameraStop={handleCameraStop}
+        setFileHandle={setFileHandle}
+        mediaRecorderRef={mediaRecorderRef}
+        chunksRef={chunksRef}
+        setStatus={setStatus}
+        setRecording={setRecording}
+      />
+          <table className="mt-5 mx-5">
             <tbody>
               <tr>
-                <td>Topic Of Test:</td>
-                <td>{randomTopic}</td>
+                <td style={{ color: "white" }}>Topic Of Test:</td>
+                <td style={{ color: "white" }}>{questionTopic}</td>
               </tr>
               <tr>
-                <td>Time Left:</td>
-                <td>{new Date().getMinutes()} Minutes</td>
+                <td style={{ color: "white" }}>Time Left:</td>
+                <td style={{ color: "white" }}>{new Date().getMinutes()} Minutes</td>
               </tr>
               <tr>
-                <td>Number of Questions:</td>
-                <td>15</td>
+                <td style={{ color: "white" }}>Number of Questions:</td>
+                <td style={{ color: "white" }}>15</td>
               </tr>
             </tbody>
           </table>
-          <table className='mt-5 mx-5'>
+          <table className="mt-5 mx-5">
             <tbody>
-              <h1 className='text-danger'>Recording In Progress <i class="bi bi-vinyl-fill"></i></h1>
-              
+              <tr>
+                <td>
+                  <h1 className="text-danger">Recording In Progress <i className="bi bi-vinyl-fill"></i></h1>
+                </td>
+              </tr>
             </tbody>
           </table>
-
         </div>
         <div className="options">
           {/* Add options component or data */}

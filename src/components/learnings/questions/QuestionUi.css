@@ -60,7 +60,7 @@
 
 /* Styles for each individual QuizUi component */
 .quiz {
-  background-color: #444; /* Darker background color */
+  /* background-color: #444; Darker background color */
   padding: 20px;
   border-radius: 10px;
   margin: 0 10px;

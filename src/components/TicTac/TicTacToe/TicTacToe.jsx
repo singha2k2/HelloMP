@@ -94,8 +94,8 @@ const TicTacToe = ({ videoUrl = "./video/ttt.mp4" }) => {
 
     return (
         <>
-            <div className='ticcontainer'>
-                <h1 className="tictitle" ref={titleRef}>The Tic Tac Toer </h1>
+            <div className='ticcontainer' >
+                <h1 className="tictitle" style={{color:"white"}} ref={titleRef}>The Tic Tac Toer </h1>
                 <div className="board">
                     <div className="row1">
                         <div className="boxes" ref={box1} onClick={(e) => { toggle(e, 0) }}></div>
@@ -117,10 +117,10 @@ const TicTacToe = ({ videoUrl = "./video/ttt.mp4" }) => {
 
             </div>
             <div className='score-container'>
-                <h2>Game Statistics</h2>
-                <p>Total Games Played: {stats.totalGames}</p>
-                <p>X Wins: {stats.X}</p>
-                <p>O Wins: {stats.O}</p>
+                <h2 style={{color:"white"}} >Game Statistics</h2>
+                <p style={{color:"white"}} >Total Games Played: {stats.totalGames}</p>
+                <p style={{color:"white"}} >X Wins: {stats.X}</p>
+                <p style={{color:"white"}} >O Wins: {stats.O}</p>
             </div>
         </>
     )

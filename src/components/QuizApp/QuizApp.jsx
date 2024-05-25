@@ -1,172 +1,118 @@
-// import React, { useState } from 'react';
-// import './style.css'; // Assuming you have a CSS file named 'style.css'
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { stopRecordingAndSave } from "../knowledgeTest/cameraMonitoring/cameraMonitoring";
+import "./style.css";
+import {
+  reactQuestions,
+  computerNetworkingQuestions,
+  osQuestions,
+  dsaQuestions,
+  oopsQuestions,
+} from "./questions";
 
-// const questions = [
-//     {
-//         question: "Which is the largest animal in the world?",
-//         answers: [
-//             { text: "Shark", correct: false },
-//             { text: "Blue Whale", correct: true },
-//             { text: "Elephant", correct: false },
-//             { text: "Giraffe", correct: false }
-//         ]
-//     },
-//     {
-//         question: "Which is the smallest continent in the world?",
-//         answers: [
-//             { text: "Asia", correct: false },
-//             { text: "Australia", correct: true },
-//             { text: "Arctic", correct: false },
-//             { text: "Africa", correct: false }
-//         ]
-//     },
-//     {
-//         question: "Which is the largest desert in the world?",
-//         answers: [
-//             { text: "Kalahari", correct: false },
-//             { text: "Gobi", correct: false },
-//             { text: "Sahara", correct: false },
-//             { text: "Antarctica", correct: true }
-//         ]
-//     }
-// ];
+const topicsMap = {
+  reactQuestions: reactQuestions,
+  computerNetworkingQuestions: computerNetworkingQuestions,
+  osQuestions: osQuestions,
+  dsaQuestions: dsaQuestions,
+  oopsQuestions: oopsQuestions,
+};
 
-// function QuizApp() {
-//     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-//     const [score, setScore] = useState(0);
+function QuizApp({ 
+  onFinish, 
+  fileHandle, 
+  setFileHandle, 
+  mediaRecorderRef, 
+  chunksRef, 
+  setStatus, 
+  setRecording, 
+  onCameraStop 
+}) {
+  const { questionTopic } = useParams();
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [score, setScore] = useState(0);
+  const [showScore, setShowScore] = useState(false);
+  const [choosenTopic, setChoosenTopic] = useState([]);
+  const navigate = useNavigate();
 
-//     const startQuiz = () => {
-//         setCurrentQuestionIndex(0);
-//         setScore(0);
-//     };
+  useEffect(() => {
+    const selectedQuestions = topicsMap[questionTopic] || [];
+    setChoosenTopic(selectedQuestions);
+  }, [questionTopic]);
 
-//     const handleNextButton = () => {
-//         setCurrentQuestionIndex(prevIndex => prevIndex + 1);
-//     };
+  const handleAnswerButtonClick = (isCorrect) => {
+    if (isCorrect) {
+      setScore((prevScore) => prevScore + 1);
+    }
+    const nextQuestionIndex = currentQuestionIndex + 1;
+    if (nextQuestionIndex < choosenTopic.length) {
+      setCurrentQuestionIndex(nextQuestionIndex);
+    } else {
+      setShowScore(true);
+      if (onFinish) {
+        onFinish(); // Call onFinish prop if provided
+      }
+    }
+  };
 
-//     const selectAnswer = (isCorrect) => {
-//         if (isCorrect) {
-//             setScore(prevScore => prevScore + 1);
-//         }
-//         handleNextButton();
-//     };
+  const handleSubmitButton = async () => {
+    const handle = await window.showSaveFilePicker({
+      suggestedName: `recording-${Date.now()}.webm`,
+      types: [
+        {
+          description: 'Video Files',
+          accept: {
+            'video/webm': ['.webm'],
+          },
+        },
+      ],
+    });
+    setFileHandle(handle);
+    stopRecordingAndSave(handle, mediaRecorderRef, chunksRef, setStatus, setRecording, onCameraStop);
+navigate("/dashboard-user/knowledge-test");
+window.location.reload();
+  };
 
-//     const showScore = () => {
-//         return (
-//             <div>
-//                 <h2>You scored {score} out of {questions.length}</h2>
-//                 <button onClick={startQuiz}>Play Again</button>
-//             </div>
-//         );
-//     };
-
-//     const currentQuestion = questions[currentQuestionIndex];
-
-//     return (
-//         <div className="app">
-//             <h1>Simple Quiz Question</h1>
-//             <div className="quiz">
-//                 <h2 id="question">{currentQuestion.question}</h2>
-//                 <div id="answer-buttons">
-//                     {currentQuestion.answers.map((answer, index) => (
-//                         <button key={index} className="btn" onClick={() => selectAnswer(answer.correct)}>
-//                             {answer.text}
-//                         </button>
-//                     ))}
-//                 </div>
-//                 <button id="next-btn" onClick={handleNextButton}>
-//                     {currentQuestionIndex < questions.length - 1 ? 'Next' : 'Finish'}
-//                 </button>
-//                 {currentQuestionIndex === questions.length && showScore()}
-//             </div>
-//         </div>
-//     );
-// }
-
-// export default QuizApp;
-
-
-
-
-
-
-
-
-
-import React, { useState, useEffect } from 'react';
-import './style.css'; // Assuming you have a CSS file named 'style.css'
-import {computerNetworkingQuestions, reactQuestions} from './questions';
-import NavbarComponent from '../navbar/navbar';
-
-
-
-function QuizApp() {
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [score, setScore] = useState(0);
-    const [showScore, setShowScore] = useState(false);
-
-    const handleAnswerButtonClick = (isCorrect) => {
-        if (isCorrect) {
-            setScore(score + 1);
-        }
-        const nextQuestionIndex = currentQuestionIndex + 1;
-        if (nextQuestionIndex < reactQuestions.length) {
-            setCurrentQuestionIndex(nextQuestionIndex);
-        } else {
-            setShowScore(true);
-        }
-    };
-
-    const handleNextButtonClick = () => {
-        const nextQuestionIndex = currentQuestionIndex + 1;
-        if (nextQuestionIndex < reactQuestions.length) {
-            setCurrentQuestionIndex(nextQuestionIndex);
-        } else {
-            setShowScore(true);
-        }
-    };
-
-    const startQuiz = () => {
-        setCurrentQuestionIndex(0);
-        setScore(0);
-        setShowScore(false);
-    };
-
-    return (
-        <>
-      
-        <div id = "quizAppBody">
+  return (
+    <>
+      <div id="quizAppBody">
         <div className="appQuizContainer">
-            <h1>Simple Quiz Question</h1>
-            <div className="quiz">
-                {showScore ? (
-                    <div>
-                        <h2>You scored {score} out of {reactQuestions.length}</h2>
-                        <button onClick={startQuiz}>Play Again</button>
-                    </div>
-                ) : (
-                    <div>
-                        <h2 id="question">{reactQuestions[currentQuestionIndex].question}</h2>
-                        <div id="answer-buttons">
-                            {reactQuestions[currentQuestionIndex].answers.map((answer, index) => (
-                                <button key={index} className="quizBtn" onClick={() => handleAnswerButtonClick(answer.correct)}>
-                                    {answer.text}
-                                </button>
-                            ))}
-                        </div>
-                        <button id="next-btn" onClick={handleNextButtonClick}>
-                            {currentQuestionIndex < reactQuestions.length - 1 ? 'Next' : 'Finish'}
+          <h1>{questionTopic} {currentQuestionIndex + 1}/{choosenTopic.length}</h1>
+          <div className="quiz">
+            {showScore ? (
+              <div>
+                <h2>
+                  You scored {score} out of {choosenTopic.length}
+                </h2>
+                <Link className="btn btn-primary" onClick={handleSubmitButton}>Submit</Link>
+              </div>
+            ) : (
+              choosenTopic.length > 0 && (
+                <div>
+                  <h2 id="question">
+                    {choosenTopic[currentQuestionIndex].question}
+                  </h2>
+                  <div id="answer-buttons">
+                    {choosenTopic[currentQuestionIndex].answers.map(
+                      (answer, index) => (
+                        <button
+                          key={index}
+                          className="quizBtn"
+                          onClick={() => handleAnswerButtonClick(answer.correct)}
+                        >
+                          {answer.text}
                         </button>
-                    </div>
-                )}
-            </div>
+                      )
+                    )}
+                  </div>
+                </div>
+              )
+            )}
+          </div>
         </div>
-        </div>
-        </>
-    );
+      </div>
+    </>
+  );
 }
 
 export default QuizApp;
-
-
-

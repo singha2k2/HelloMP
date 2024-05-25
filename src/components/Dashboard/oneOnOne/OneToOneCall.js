@@ -11,27 +11,42 @@ function OneToOneCall({ userData }) {
   }, [userData]);
 
   const myMeeting = async (element) => {
-    const appID = 2002081683;
-    const serverSecret = "d87f68078f4bc4a2c84f8056d41069d3";
-    // const appID = 331638582;
-    // const serverSecret = "283f94bdc33057ac4178624c96d7b2e5";
-    const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
-      appID,
-      serverSecret,
-      roomNumber,
-
-      uData.user.email || "User Email",
-      uData.user.name || "User Name"
-    );
-
-    const zc = ZegoUIKitPrebuilt.create(kitToken);
-
-    zc.joinRoom({
-        container : element,
-        scenario : {
-            mode : ZegoUIKitPrebuilt.OneONoneCall
+    // Replace with your own appID and serverSecret
+    const appID = 407876073;
+    const serverSecret = "f97722428a7ce296d51489be65ff1957";
+    
+    if (!roomNumber) {
+      console.error("Room number is missing.");
+      return;
+    }
+    
+    if (!uData.user.name) {
+      console.error("User name is missing.");
+      return;
+    }
+    
+    try {
+      const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+        appID,
+        serverSecret,
+        roomNumber,
+        uData.user.email,
+        uData.user.name || "UserName"
+      );
+     
+      
+      const zc = ZegoUIKitPrebuilt.create(kitToken);
+      
+      
+      console.log(zc.joinRoom({
+        container: element,
+        scenario: {
+          mode: ZegoUIKitPrebuilt.OneONoneCall
         }
-    })
+      }));
+    } catch (error) {
+      console.error("Error generating kit token or joining room:", error);
+    }
   };
 
   return (

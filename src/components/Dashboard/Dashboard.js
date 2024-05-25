@@ -27,6 +27,9 @@ import NotFoundInDashboard from "./notFound/NotFoundInDashboard";
 import OneToOneCall from "./oneOnOne/OneToOneCall";
 import ChatDoubtSolver from "./ChatDoubtSolver";
 import ChatSolverChatter from "./ChatSolverChatter";
+import KnowledgeOptions from "../knowledgeTest/knowledgeOptions";
+import AllCompilerOptions from "./allCompilers/AllCompilerOptions";
+import AllCompiler from "./allCompilers/AllCompiler";
 
 function Dashboard() {
   const user = useSelector((state) => state.user);
@@ -43,7 +46,7 @@ function Dashboard() {
   const [successCredits, setSuccessCredits] = useState(0);
   const [isImageOpen, setIsImageOpen] = useState(true);
   const [currentImage, setCurrentImage] = useState(
-    "./images/SuccessCredits.png"
+    
   );
   const [existingCoins, setExistingCoins] = useState(
      0
@@ -228,7 +231,7 @@ setExistingCoins((exiting) => exiting -5);
       {isImageOpen && (
         <div
           className="fullscreen-image"
-          style={{ backgroundImage: `url(${currentImage})` }}
+          style={{ backgroundImage: `url("./images/SuccessCredits.png")` }}
           onClick={closeImage}
         ></div>
       )}
@@ -315,12 +318,12 @@ setExistingCoins((exiting) => exiting -5);
             <Link to={"chat-with-ai"} style={{fontSize: "large" ,fontStyle:"italic",
     background: "linear-gradient(135deg, #153677, #4e085f)",
     borderRadius: "10px"}} className="btn btn-dark mx-2 p-2 my-2">
-              <button>Chat With AI</button>
+              <button>Chat With AI[Fresh<i class="bi bi-feather"></i>]</button>
             </Link>
             <Link to={"knowledge-test"} style={{fontSize: "large" ,fontStyle:"italic",
     background: "linear-gradient(135deg, #153677, #4e085f)",
     borderRadius: "10px"}} className="btn btn-dark mx-2 p-2 my-2">
-              <button>Knowledge Test</button>
+              <button>Knowledge Test[Fresh<i class="bi bi-feather"></i>]</button>
             </Link>
             <Link to={"tic-tac-toe"} style={{fontSize: "large" ,fontStyle:"italic",
     background: "linear-gradient(135deg, #153677, #4e085f)",
@@ -330,7 +333,12 @@ setExistingCoins((exiting) => exiting -5);
             <Link to={"java-coder"} style={{fontSize: "large" ,fontStyle:"italic",
     background: "linear-gradient(135deg, #153677, #4e085f)",
     borderRadius: "10px"}} className="btn btn-dark mx-2 p-2 my-2">
-              <button>Java Pad</button>
+              <button>Java Pad[Fresh<i class="bi bi-feather"></i>]</button>
+            </Link>
+            <Link to={"code-you-love"} style={{fontSize: "large" ,fontStyle:"italic",
+    background: "linear-gradient(135deg, #153677, #4e085f)",
+    borderRadius: "10px"}} className="btn btn-dark mx-2 p-2 my-2">
+              <button>Code You Love[New<i class="bi bi-stars"></i>]</button>
             </Link>
             <Link to={"todo-list"} style={{fontSize: "large" ,fontStyle:"italic",
     background: "linear-gradient(135deg, #153677, #4e085f)",
@@ -372,7 +380,8 @@ setExistingCoins((exiting) => exiting -5);
             <Route path="/web-compiler" element={<WebCodeCompiler />} />
             <Route path="/flex-box-game" element={<FlexboxGame />} />
             <Route path="/chat-with-ai" element={<Chatbot />} />
-            <Route path="/knowledge-test" element={<KnowledgeTest />} />
+            <Route path="/knowledge-test/:questionTopic" element={<KnowledgeTest />} />
+            <Route path="/knowledge-test" element={<KnowledgeOptions />} />
             <Route path="/one-on-one" element={<OneOnOne userData={userData} linkString={"/dashboard-user/"} />} />
             <Route path="/one-to-one-call/:roomNumber" element={<OneToOneCall userData={userData} />} />
             <Route path="/chat-solver" element={<ChatDoubtSolver />} />
@@ -382,6 +391,8 @@ setExistingCoins((exiting) => exiting -5);
               element={<TicTacToe videoUrl="./video/ttt.mp4" />}
             />
             <Route path="/java-coder" element={<JavaCodeCompiler />} />
+            <Route path="/code-you-love" element={<AllCompilerOptions />} />
+            <Route path="/love-to-code/:langauage" element={<AllCompiler />} />
             <Route path="/todo-list" element={<ToDoListApp />} />
             <Route path="/doubt-asker" element={<AskDoubts handleSuccessCreditUpdation={handleSuccessCreditUpdation} />} />
             <Route path="/all-transactions" element={<AllPayments />} />

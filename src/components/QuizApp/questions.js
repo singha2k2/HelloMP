@@ -710,4 +710,4 @@ const oopsQuestions = [
 ];
 
 
-export  {computerNetworkingQuestions, reactQuestions, };
+export  {reactQuestions,computerNetworkingQuestions,osQuestions,dsaQuestions,oopsQuestions };

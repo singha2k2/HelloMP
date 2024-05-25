@@ -11,25 +11,31 @@ import { processMessageToChatGPT } from "../../Dashboard/Chatbot";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-export const defaultCode =
-  'public class Main{\n  public static void main(String[] args){\n    System.out.println("Hello");\n  }\n}';
+export const defaultCode = 'Write File Name First and Then Your Code';
 
-function JavaCodeCompiler({ embeddedCode = defaultCode, testingCode }) {
+function AllCompiler({ embeddedCode = defaultCode, testingCode }) {
   const { langauage } = useParams();
   const { darkMode } = useTheme();
   const [code, setCode] = useState("");
-  const [compiledCode, setCompiledCode] = useState("Write Code to Start....");
+  const [fileName, setFileName] = useState("");
+  const [compiledCode, setCompiledCode] = useState("Write Both File Name and Code to Start ....");
   const [compilerError, setCompilerError] = useState("");
-  const [compilerStatus, setCompilerStatus] = useState("Write to Start ....");
-  const [aiSuggestions, setAiSuggestions] = useState("Write Code to Start....");
+  const [compilerStatus, setCompilerStatus] = useState("Write Both File Name and Code to Start ....");
+  const [aiSuggestions, setAiSuggestions] = useState("Write Both File Name and Code to Start ....");
   const [isLoading, setIsLoading] = useState(false);
   const [isAiLoading, setAiIsLoading] = useState(false);
   const [errorLines, setErrorLines] = useState([]);
 
   const debouncedValue = useDebounce(code, 3000);
 
+  const isFileNameValid = (name) => {
+    // Basic validation for the file name
+    const regex = /^[a-zA-Z0-9_-]+\.(asm|dats|sh|c|lisp|clj|cbl|coffee|cpp|cr|cs|d|dart|ex|elm|erl|fs|go|groovy|scm|hare|hs|idr|java|js|jl|kt|lua|m|nim|nix|ml|pas|pl|php|py|raku|rb|rs|sac|scala|swift|ts|zig)$/;
+    return regex.test(name);
+  };
+
   const compileCode = async () => {
-    if (debouncedValue) {
+    if (debouncedValue && isFileNameValid(fileName)) {
       const lang = "java";
 
       setIsLoading(true);
@@ -37,11 +43,11 @@ function JavaCodeCompiler({ embeddedCode = defaultCode, testingCode }) {
 
       try {
         const response = await axios.post(
-          "https://learning-server-olive.vercel.app/core/compile-java",
+          `https://learning-server-olive.vercel.app/core/compile-dynamic/${langauage}`,
           {
             files: [
               {
-                name: "Main.java",
+                name: fileName,
                 content: code,
               },
             ],
@@ -107,7 +113,7 @@ function JavaCodeCompiler({ embeddedCode = defaultCode, testingCode }) {
 
   useEffect(() => {
     compileCode();
-  }, [debouncedValue]);
+  }, [debouncedValue, fileName]);
 
   const handleCodeChange = (e) => {
     setCode(e.target.value);
@@ -115,6 +121,10 @@ function JavaCodeCompiler({ embeddedCode = defaultCode, testingCode }) {
     setAiSuggestions("");
     setCompilerStatus("Write to Start ....");
     setErrorLines([]);
+  };
+
+  const handleFileNameChange = (e) => {
+    setFileName(e.target.value);
   };
 
   const compilerStyle = {
@@ -146,7 +156,21 @@ function JavaCodeCompiler({ embeddedCode = defaultCode, testingCode }) {
           <Card.Body>
             <h2 className="mb-4">{(langauage ? `${langauage.substring(0,1).toUpperCase()}${langauage.substring(1)}`:"Java" )} Code Compiler</h2>
             <Form>
-              <Form.Group controlId="code">
+              <Form.Group controlId="fileName">
+                <Form.Label>Enter File Name:<span className="text text-danger">*</span></Form.Label>
+                <Form.Control
+                  type="text"
+                  value={fileName}
+                  placeholder="Enter file name with extension (e.g.,for java enter Main.java)"
+                  onChange={handleFileNameChange}
+                />
+                {!isFileNameValid(fileName) && fileName && (
+                  <Alert variant="danger" className="mt-2">
+                    Invalid file name. Please enter a valid file name with an appropriate extension.
+                  </Alert>
+                )}
+              </Form.Group>
+              <Form.Group controlId="code" className="mt-3">
                 <Form.Label>Enter {(langauage ? `${langauage.substring(0,1).toUpperCase()}${langauage.substring(1)}`:"Java" )} Code:</Form.Label>
                 <Form.Label className="d-flex">
                   Status: {compilerStatus}
@@ -164,6 +188,16 @@ function JavaCodeCompiler({ embeddedCode = defaultCode, testingCode }) {
             </Form>
           </Card.Body>
         </Card>
+
+        {/* <div className="mt-4">
+          <Button
+            variant="primary"
+            onClick={compileCode}
+            disabled={!code || !isFileNameValid(fileName)}
+          >
+            Compile
+          </Button>
+        </div> */}
 
         <div className="mt-4">
           <Card>
@@ -213,4 +247,4 @@ function JavaCodeCompiler({ embeddedCode = defaultCode, testingCode }) {
   );
 }
 
-export default JavaCodeCompiler;
+export default AllCompiler;

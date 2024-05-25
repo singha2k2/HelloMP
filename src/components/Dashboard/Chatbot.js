@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Chatbot.css'; // Import your CSS file for styling
 import axios from 'axios';
+import Loader from '../loader/loader';
 
 
 
@@ -20,35 +21,52 @@ export const processMessageToChatGPT = async (chatMessages,API_KEY) => {
         content: "Explain all concepts as if I am 10 years old and if possible in one liner and very much consized manner"
     };
 
+    // {
+    //     "model": "phi3",
+    //     "prompt": "Why is the sky blue?",
+    //     "stream": false
+    //   }
     const apiRequestBody = {
-        "model": "gpt-3.5-turbo",
-        "messages": [
-            systemMessage,
-            ...apiMessages
-        ]
+        "model": "phi3",
+        "prompt": apiMessages.map(message => message.content).join("\n") + "\n" + systemMessage.content,
+        "stream": false
     };
 
     try {
-        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        const response = await fetch("http://localhost:11434/api/generate",{
             method: "POST",
-            headers: {
-                "Authorization": `Bearer ${API_KEY}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(apiRequestBody)
-        });
-
+            body: JSON.stringify(apiRequestBody),
+        })
         const data = await response.json();
-
-        return data.choices[0].message.content;
+        console.log(data);
+        return data.response;
     } catch (error) {
         console.error("API request error:", error);
         throw new Error("An error occurred during the API request.");
     }
+
+    // try {
+    //     const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    //         method: "POST",
+    //         headers: {
+    //             "Authorization": `Bearer ${API_KEY}`,
+    //             "Content-Type": "application/json"
+    //         },
+    //         body: JSON.stringify(apiRequestBody)
+    //     });
+
+    //     const data = await response.json();
+
+    //     return data.choices[0].message.content;
+    // } catch (error) {
+    //     console.error("API request error:", error);
+    //     throw new Error("An error occurred during the API request.");
+    // }
 };
 
 
 function Chatbot() {
+    const [isLoading,setIsLoading] = useState(false);
     const [API_KEY,SET_API_KEY] = useState("");
 
     const [input, setInput] = useState("");
@@ -80,6 +98,7 @@ function Chatbot() {
     };
 
     const handleSend = async (event) => {
+        setIsLoading(true);
         event.preventDefault();
         
         const newMessage = {
@@ -116,12 +135,17 @@ function Chatbot() {
             setMessages(updatedMessages);
             // Handle error if needed
         }
+        finally{
+            setIsLoading(false);
+        }
     };
     
 
     
 
     return (
+        <>
+        {isLoading && <Loader />}
         <div className="chatbot-container">
             <div className="chatbot">
                 <div className="chatbot-messages" ref={chatbotMessagesRef}>
@@ -141,6 +165,7 @@ function Chatbot() {
                 </div>
             </div>
         </div>
+        </>
     );
 }
 
