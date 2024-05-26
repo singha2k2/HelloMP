@@ -30,6 +30,7 @@ import ChatSolverChatter from "./ChatSolverChatter";
 import KnowledgeOptions from "../knowledgeTest/knowledgeOptions";
 import AllCompilerOptions from "./allCompilers/AllCompilerOptions";
 import AllCompiler from "./allCompilers/AllCompiler";
+import VisualizeCode from "./visualIzeCode/VisualizeCode";
 
 function Dashboard() {
   const user = useSelector((state) => state.user);
@@ -340,6 +341,11 @@ setExistingCoins((exiting) => exiting -5);
     borderRadius: "10px"}} className="btn btn-dark mx-2 p-2 my-2">
               <button>Code You Love[New<i class="bi bi-stars"></i>]</button>
             </Link>
+            <Link to={"visualize-code"} style={{fontSize: "large" ,fontStyle:"italic",
+    background: "linear-gradient(135deg, #153677, #4e085f)",
+    borderRadius: "10px"}} className="btn btn-dark mx-2 p-2 my-2">
+              <button>Visualize Code[New<i class="bi bi-stars"></i>]</button>
+            </Link>
             <Link to={"todo-list"} style={{fontSize: "large" ,fontStyle:"italic",
     background: "linear-gradient(135deg, #153677, #4e085f)",
     borderRadius: "10px"}} className="btn btn-dark mx-2 p-2 my-2">
@@ -392,6 +398,7 @@ setExistingCoins((exiting) => exiting -5);
             />
             <Route path="/java-coder" element={<JavaCodeCompiler />} />
             <Route path="/code-you-love" element={<AllCompilerOptions />} />
+            <Route path="/visualize-code" element={<VisualizeCode />} />
             <Route path="/love-to-code/:langauage" element={<AllCompiler />} />
             <Route path="/todo-list" element={<ToDoListApp />} />
             <Route path="/doubt-asker" element={<AskDoubts handleSuccessCreditUpdation={handleSuccessCreditUpdation} />} />
