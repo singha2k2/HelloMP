@@ -1,8 +1,80 @@
-/* .player{
-    width: 100%;
-}
-.progress{
-    width: 20vw;
-    height: 100vh;
-} */
+.video-player-ui {
+    display: flex;
+    height: 90vh;
+  }
+
+  .video-player {
+    flex: 2;
+    padding: 20px;
+    padding-right: 0; /* Remove padding on the right to ensure no gap */
+  }
+
+
+  .course-video-player {
+    width: 90%;
+    height: 100%;
+    margin-left: 0%;
+  }
+
+  .progress-modules {
+    flex: 1;
+   
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    
+    background-color: #f9f9f9; /* Optional: Adds a light background to differentiate */
+  }
+  
+  .left-section {
+    flex: 3; /* Takes up 3/4 of the space */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  
+  .right-section {
+    flex: 1; /* Takes up 1/4 of the space */
+    overflow-y: auto;
+    max-height: 100%;
+    padding: 20px;
+    background-color: #f8f9fa;
+  }
+
+  .items-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .item-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .item-label input {
+    margin-right: 10px;
+  }
+  
+  .section {
+    margin-bottom: 2px;
+  }
+  
+  .section h3 {
+    margin-top: 1;
+  }
+  
+  .section ul {
+    padding-left: 20px;
+  }
+
+  .solve-doubt-container {
+    margin: 20px; /* Add proper margin */
+    padding: 20px; /* Add padding if needed */
+    
+  }
+  
+  .section li {
+    list-style-type: disc;
+    margin-bottom: 10px;
+  }
   

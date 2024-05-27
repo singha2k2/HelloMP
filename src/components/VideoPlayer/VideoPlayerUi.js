@@ -1,39 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 import CourseVideoPlayer from "./CourseVideoPlayer";
 import "./VideoPlayerUi.css";
+import SolveDoubt from "../Dashboard/AskDoubts";
+import NavbarComponent from "../navbar/navbar";
+
+const sections = [
+  {
+    title: "Section 1",
+    items: ["Item 1", "Item 2", "Item 3"],
+  },
+  {
+    title: "Section 2",
+    items: ["Item 4", "Item 5", "Item 6"],
+  },
+];
 
 function VideoPlayerUi() {
+  const [completedItems, setCompletedItems] = useState(
+    sections.map((section) => section.items.map(() => false))
+  );
+
+  const handleVideoEnd = (sectionIndex, itemIndex) => {
+    const newCompletedItems = [...completedItems];
+    newCompletedItems[sectionIndex][itemIndex] = true;
+    setCompletedItems(newCompletedItems);
+  };
+
   return (
     <>
-    <div style={{ height: "99vh" }} className="d-flex justify-content-center">
-      <div className="player">
-        <CourseVideoPlayer />
-      </div>
-      <div className="progress-modules" style={{ overflowY: "auto", maxHeight: "80vh", width: "300px" }}>
-        {/* Example sections */}
-        <div>
-          <h3>Section 1</h3>
-          <ul>
-            <li>Item 1</li>
-            <li>Item 2</li>
-            <li>Item 3</li>
-            {/* Add more items as needed */}
-          </ul>
+      <NavbarComponent />
+      <div className="video-player-ui">
+        <div className="video-player">
+          <div className="course-video-player">
+            <CourseVideoPlayer onVideoEnd={() => handleVideoEnd(0, 0)} />
+          </div>
         </div>
-        <div>
-          <h3>Section 2</h3>
-          <ul>
-            <li>Item 4</li>
-            <li>Item 5</li>
-            <li>Item 6</li>
-            {/* Add more items as needed */}
-          </ul>
+        <div className="progress-modules">
+          {sections.map((section, sectionIndex) => (
+            <div key={sectionIndex} className="section">
+              <h3>{section.title}</h3>
+              <div className="items-container">
+                {section.items.map((item, itemIndex) => (
+                  <label key={itemIndex} className="item-label">
+                    <input
+                      type="checkbox"
+                      checked={completedItems[sectionIndex][itemIndex]}
+                      readOnly
+                    />
+                    {item}
+                  </label>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
-        {/* Add more sections as needed */}
       </div>
-    </div>
-  </>
-  
+    </>
   );
 }
 
