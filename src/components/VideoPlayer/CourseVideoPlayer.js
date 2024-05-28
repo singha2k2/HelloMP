@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import ReactPlayer from "react-player";
 
-function CourseVideoPlayer({ onVideoEnd }) {
+function CourseVideoPlayer({ videoUrls, onVideoEnd }) {
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
   const [playing, setPlaying] = useState(true);
@@ -19,17 +20,25 @@ function CourseVideoPlayer({ onVideoEnd }) {
     setPlaying(true);
   };
 
+  const handleVideoEnd = () => {
+    onVideoEnd(currentVideoIndex);
+    if (currentVideoIndex < videoUrls.length - 1) {
+      setCurrentVideoIndex(currentVideoIndex + 1);
+      setCurrentTime(0); // Reset time for the new video
+    }
+  };
+
   return (
     <div style={{ position: "relative", width: "100%", height: "80%" }}>
       <ReactPlayer
         ref={playerRef}
-        url="https://www.youtube.com/watch?v=2NSiQPnrU98?rel=0&version=3&autoplay=1&controls=0&showinfo=0&loop=1"
+        url={videoUrls[currentVideoIndex]}
         playing={playing}
         controls={false}
         height="100%"
         width="100%"
         onProgress={(progress) => setCurrentTime(Math.floor(progress.playedSeconds))}
-        onEnded={onVideoEnd}
+        onEnded={handleVideoEnd}
       />
       <div
         style={{
