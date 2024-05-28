@@ -17,6 +17,8 @@ function InitialCodePractice({
     setAnswer("");
   };
 
+  const pStatement="Create a class named car with  two data members - weight and color and one method drive and print \'i am driving a car\'";
+
   return (
     <>
       <div className="coding-practice-main">
@@ -33,7 +35,7 @@ function InitialCodePractice({
               </Modal.Body>
 
               <Modal.Footer>
-                <Link to={"/"} className="btn btn-success" >Proceed</Link>
+                <Link to={`/java-coder-dashboard/${pStatement}`} className="btn btn-success" >Proceed</Link>
                
               </Modal.Footer>
             </Modal.Dialog>

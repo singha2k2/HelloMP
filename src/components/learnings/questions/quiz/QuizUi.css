@@ -1,0 +1,19 @@
+.quiz-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .card {
+    cursor: pointer;
+  }
+  
+  .card-body {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .enrolled {
+    background-color: #f0f0f0;
+  }
+  

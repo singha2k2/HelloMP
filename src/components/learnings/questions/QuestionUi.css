@@ -34,7 +34,6 @@
   position: sticky;
  bottom: 0;
   background-color: rgba(19, 31, 36, 1); /* Add background color */
-  border: 1px solid white;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -56,16 +56,16 @@ function Dashboard() {
     {
       _id: 1,
       imageLink: "/images/dashboard/java_course_1.jpg",
-      heading: "Learn Java Basics",
-      description: "Premium content to Learn Java Basics",
-      linktoredirect: "/learn-oops-in-java",
+      heading: "Learn Hello World",
+      description: "Premium content to Learn Hello World",
+      linktoredirect: "/learn-hello-world",
       isCompleted: false,
       isEnrolled: false,
     },
     {
       _id: 2,
       imageLink: "/images/dashboard/java_course_2.jpg",
-      heading: "Learn Inheritance",
+      heading: "Lets Start Oops ",
       description:
         "Premium content to Java Access Modifiers (Inheritance Basics)",
       linktoredirect: "/learn-oops-in-java",

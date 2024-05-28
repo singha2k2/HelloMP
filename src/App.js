@@ -26,6 +26,7 @@ import PremiumUi from "./components/premiumContent/PremiumUi";
 import PremiumSuccess from "./components/premiumContent/PremiumSuccess";
 import AllPayments from "./components/premiumContent/AllPayments";
 import NotFound from "./components/NotFound/NotFound";
+import CompilerOnDashboard from "./components/Dashboard/compilerOnDashboard/CompilerOnDashboard";
 function App() {
   return (
     <>
@@ -59,14 +60,14 @@ function App() {
             <Route path="/dashboard-user/*" element={<Dashboard />} />
             <Route path="/dashboard-admin/*" element={<AdminDashboard />} />
             <Route path="/dashboard-doubt-solver/*" element={<DoubtSolverDashboard />} />
-            
+            <Route path="/java-coder-dashboard/:pStatement" element={<CompilerOnDashboard />} />
             {/* Features */}
+            <Route path="/learn-oops-in-java" element={<OopsBasics />} />
+            <Route path="/doulingo-test" element={<QuestionUi  />} /> 
+            <Route path="/learn-hello-world" element={<VideoPlayerUi />} />
            <Route path="/learning-options" element={<KnowledgeTest />} />
-            {/* <Route path="/learn-oops-in-java" element={<QuestionUi />} /> */}
-            <Route path="/learn-oops-in-java" element={<VideoPlayerUi />} />
             <Route path="/get-more-in-less" element={<PremiumUi />} />
             <Route path="/payment-success" element={<PremiumSuccess />} />
-            {/* <Route path="/learn-oops-in-java" element={<OopsBasics />} /> */}
            
             <Route path='/learn-with-interaction' element={<Userinteraction />} />
             <Route path='/learn-to-code' element={<LearnToCode />} />

@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 
-
-function QuizUi() {
+function QuizUi({ question,correctAnswer, options }) {
   const [isEnrolled, setIsEnrolled] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [alert, setAlert] = useState(null);
+
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    if (option === correctAnswer) {
+      setAlert({ type: "success", message: "Correct Answer!" });
+    } else {
+      setAlert({ type: "danger", message: "Wrong Answer!" });
+    }
+  };
 
   return (
-    
-
-   
     <div className="quiz-container">
       <div
         className="card"
@@ -25,17 +32,31 @@ function QuizUi() {
           style={{
             border: "1px solid rgb(228, 228, 228)",
             boxShadow: "5px 5px 15px rgb(174, 173, 173)",
-            width: "10rem",
+            width: "85%",
             margin: "15px",
             height: "85%",
             borderRadius: "20px",
             zIndex: 9999,
           }}
         >
-          <h5 className="card-title">Heading</h5>
+          <h5 className="card-title">{question}</h5>
+          {options.map((option, index) => (
+            <button
+              key={index}
+              onClick={() => handleOptionClick(option)}
+              className="btn btn-primary"
+              style={{ display: "block", marginBottom: "10px" }}
+            >
+              {option}
+            </button>
+          ))}
         </div>
-     
-    </div>
+      </div>
+      {alert && (
+        <div className={`alert alert-${alert.type}`} role="alert">
+          {alert.message}
+        </div>
+      )}
     </div>
   );
 }
