@@ -27,6 +27,7 @@ import PremiumSuccess from "./components/premiumContent/PremiumSuccess";
 import AllPayments from "./components/premiumContent/AllPayments";
 import NotFound from "./components/NotFound/NotFound";
 import CompilerOnDashboard from "./components/Dashboard/compilerOnDashboard/CompilerOnDashboard";
+import Redirection from "./components/courseRedirection/Redirection";
 function App() {
   return (
     <>
@@ -61,9 +62,12 @@ function App() {
             <Route path="/dashboard-admin/*" element={<AdminDashboard />} />
             <Route path="/dashboard-doubt-solver/*" element={<DoubtSolverDashboard />} />
             <Route path="/java-coder-dashboard/:pStatement" element={<CompilerOnDashboard />} />
+
             {/* Features */}
+
             <Route path="/learn-oops-in-java" element={<OopsBasics />} />
-            <Route path="/doulingo-test" element={<QuestionUi  />} /> 
+            <Route path="/redirect/:courseName" element={<Redirection />} />
+            <Route path="/doulingo-test/:courseName" element={<QuestionUi  />} /> 
             <Route path="/learn-hello-world" element={<VideoPlayerUi />} />
            <Route path="/learning-options" element={<KnowledgeTest />} />
             <Route path="/get-more-in-less" element={<PremiumUi />} />
