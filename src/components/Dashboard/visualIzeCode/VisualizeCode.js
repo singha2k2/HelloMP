@@ -261,7 +261,7 @@ function VisualizeCode({ embeddedCode = defaultCode, testingCode }) {
 
         <div className="mt-4">
           <Card>
-            <Card.Body className="success" style={{ overflow: "auto", maxHeight: "300px" }}>
+            <Card.Body className="success" style={{ overflow: "auto", maxHeight: "210px" }}>
               <h3>
               Execution Output:<i className="bi bi-play-circle"></i>
               </h3>
