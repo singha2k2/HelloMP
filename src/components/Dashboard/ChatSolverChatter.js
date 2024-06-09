@@ -94,11 +94,11 @@ const Chatbot = () => {
                         </div>
                     ))}
                 </div>
-                <div className="chatbot-input">
+                <form className="chatbot-input" onSubmit={handleSend} >
                     <input type="text" placeholder="Type your message..." value={input} onChange={handleChange} />
-                    <button className="send-button" type="submit" onClick={handleSend}>Send</button>
+                    <button className="send-button" type="submit" >Send</button>
                     <button className="refresh-button" type="button" onClick={fetchMessages}>Refresh</button>
-                </div>
+                </form>
             </div>
         </div>
     );

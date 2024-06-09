@@ -6,7 +6,7 @@ import Card from "react-bootstrap/Card";
 import Spinner from "react-bootstrap/Spinner";
 import { useTheme } from "../../../context/ThemeContext";
 import { useDebounce } from "../../../hooks/debouncing";
-import { processMessageToChatGPT } from "../../Dashboard/Chatbot";
+import { decryptData, processMessageToChatGPT } from "../../Dashboard/Chatbot";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
@@ -86,13 +86,14 @@ function VisualizeCode({ embeddedCode = defaultCode, testingCode }) {
         const newMessages = [{ message: output, sender: "user" }];
         try {
           setAiIsLoading(true);
-          const openAiResponse = await axios.get(
-            `https://learning-server-olive.vercel.app/keys/openAiKey`
-          );
-          const API_KEY = openAiResponse.data.KeyId;
+          const API_KEY_RESPONSE = await axios.get(`https://learning-server-olive.vercel.app/keys/getBardKey`);
+          const { encryptedData} = API_KEY_RESPONSE.data;
+          const key = decryptData(encryptedData);
+         
+          
           const responseMessage = await processMessageToChatGPT(
             newMessages,
-            API_KEY
+            key
           );
           console.log(responseMessage);
           setAiSuggestions(responseMessage);
@@ -229,9 +230,9 @@ function VisualizeCode({ embeddedCode = defaultCode, testingCode }) {
                   value={code}
                   placeholder={defaultCode}
                   onChange={handleCodeChange}
-                  style={{ whiteSpace: "pre-wrap", fontFamily: "monospace" }}
+                  style={{ whiteSpace: "pre-wrap", fontFamily: "monospace", overflow: "auto" }}
                 />
-                <pre>{renderHighlightedCode()}</pre>
+                <pre style={{ overflow: "auto", maxHeight: "300px" }}>{renderHighlightedCode()}</pre>
               </Form.Group>
             </Form>
           </Card.Body>
@@ -239,7 +240,7 @@ function VisualizeCode({ embeddedCode = defaultCode, testingCode }) {
 
         <div className="mt-4">
           <Card>
-            <Card.Body className="success">
+            <Card.Body className="success" style={{ overflow: "auto", maxHeight: "300px" }}>
               <h3>
                 Compiled Code:<i className="bi bi-file-earmark-code-fill"></i>
               </h3>
@@ -260,7 +261,7 @@ function VisualizeCode({ embeddedCode = defaultCode, testingCode }) {
 
         <div className="mt-4">
           <Card>
-            <Card.Body className="success">
+            <Card.Body className="success" style={{ overflow: "auto", maxHeight: "300px" }}>
               <h3>
               Execution Output:<i className="bi bi-play-circle"></i>
               </h3>
@@ -271,7 +272,7 @@ function VisualizeCode({ embeddedCode = defaultCode, testingCode }) {
 
         <div className="mt-4">
           <Card>
-            <Card.Body className="success">
+            <Card.Body className="success" style={{ overflow: "auto", maxHeight: "210px" }}>
               <h3>
                 AI Suggestions:<i className="bi bi-robot"></i>
               </h3>

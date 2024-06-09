@@ -7,7 +7,7 @@ import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 import { useTheme } from "../../../context/ThemeContext";
 import { useDebounce } from "../../../hooks/debouncing";
-import { processMessageToChatGPT } from "../../Dashboard/Chatbot";
+import { decryptData, processMessageToChatGPT } from "../../Dashboard/Chatbot";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
@@ -84,13 +84,12 @@ function AllCompiler({ embeddedCode = defaultCode, testingCode }) {
         const newMessages = [{ message: output, sender: "user" }];
         try {
           setAiIsLoading(true);
-          const openAiResponse = await axios.get(
-            `https://learning-server-olive.vercel.app/keys/openAiKey`
-          );
-          const API_KEY = openAiResponse.data.KeyId;
+          const API_KEY_RESPONSE = await axios.get(`https://learning-server-olive.vercel.app/keys/getBardKey`);
+          const { encryptedData} = API_KEY_RESPONSE.data;
+          const key = decryptData(encryptedData);
           const responseMessage = await processMessageToChatGPT(
             newMessages,
-            API_KEY
+            key
           );
           console.log(responseMessage);
           setAiSuggestions(responseMessage);

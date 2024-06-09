@@ -96,11 +96,11 @@ function DoubtSolverChat() { // Modified to accept solverEmail prop
                         </div>
                     ))}
                 </div>
-                <div className="chatbot-input">
+                <form onSubmit={handleSend} className="chatbot-input">
                     <input type="text" placeholder="Type your message..." value={input} onChange={handleChange} />
-                    <button className="send-button" type="submit" onClick={handleSend}>Send</button>
+                    <button className="send-button" type="submit" >Send</button>
                     <button className="refresh-button" type="button" onClick={fetchMessages}>Refresh</button>
-                </div>
+                </form>
             </div>
         </div>
   )
