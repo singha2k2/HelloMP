@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import './Chatbot.css'; // Import your CSS file for styling
 import axios from 'axios';
 import Loader from '../loader/loader';
-import CryptoJS from 'crypto-js';
 
 export const processMessageToChatGPT = async (chatMessages, API_KEY) => {
     const apiMessages = chatMessages.map((messageObject) => {
